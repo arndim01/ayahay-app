@@ -1,0 +1,52 @@
+.bol {
+  font-size: 14px;
+  font-family: Arial, serif;
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+
+  tr.main {
+    th,
+    td {
+      padding: 5px;
+      border: 1px solid black;
+      text-align: center;
+      font-weight: 400;
+
+      &:nth-child(1) {
+        width: 16px;
+      }
+    }
+  }
+
+  h1 {
+    max-width: none;
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  section.header {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-bottom: 10px;
+    align-items: center;
+
+    div:nth-child(4) {
+      align-self: end;
+    }
+
+    p:last-child {
+      align-self: start;
+    }
+
+    .frr {
+      font-size: 16px;
+      font-family: Arial, serif;
+    }
+  }
+}

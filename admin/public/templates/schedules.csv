@@ -1,0 +1,3 @@
+Shipping Line,Origin Port,Destination Port,Departure Date (YYYY-MM-DDTHH:mm:ss),BaseFare (no commas)
+Name of shipping line,Name of origin port,"Enclose names with commas, with double quotes",2023-05-25T23:00:00,10000
+Cokaliong,Manila,"Bogo, Cebu",2023-05-25T23:00:00,10000

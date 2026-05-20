@@ -1,0 +1,27 @@
+.main-container {
+  padding: 16px 18vw 40px;
+
+  @media (max-width: 1023px) {
+    padding: 24px 10vw;
+  }
+
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    @media (max-width: 819px) {
+      flex-direction: column;
+    }
+  }
+
+  p {
+    font-size: clamp(15px, 3vw, 17px);
+    padding: 0 10px 0 10px;
+  }
+}
+
+.title {
+  margin-top: 40px;
+}

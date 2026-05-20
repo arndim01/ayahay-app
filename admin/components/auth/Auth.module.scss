@@ -1,0 +1,31 @@
+.login-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+
+  @media (max-width: 1920px) {
+    width: calc(100% - 60vw);
+  }
+
+  @media (max-width: 1366px) {
+    width: calc(100% - 50vw);
+  }
+
+  @media (max-width: 912px) {
+    width: calc(100% - 10vw);
+  }
+}
+
+.login-form-button {
+  text-align: center;
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

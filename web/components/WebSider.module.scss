@@ -1,0 +1,14 @@
+#web-sider {
+  display: block;
+  position: fixed;
+  right: 0;
+  height: 100vh;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+
+  #web-sider-nav {
+    padding: 16px 8px;
+  }
+}

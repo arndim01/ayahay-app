@@ -1,0 +1,618 @@
+.tableCard {
+  margin: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  background: #fff;
+  padding: 24px;
+  transition: all 0.3s ease;
+
+  @media (max-width: 576px) {
+    margin: 8px;
+    padding: 8px;
+  }
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.tripTable {
+  :global {
+    .ant-table {
+      border-radius: 8px;
+      width: 100%;
+      table-layout: auto;
+    }
+
+    .ant-table-container {
+      overflow-x: auto;
+    }
+
+    .ant-table-thead > tr > th {
+      background-color: #fafafa;
+      font-weight: 600;
+      padding: 16px 8px;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &::before {
+        display: none;
+      }
+    }
+
+    .ant-table-tbody > tr > td {
+      padding: 16px 8px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .ant-table-tbody > tr:hover > td {
+      background-color: #f0f7ff;
+    }
+  }
+}
+
+.routeContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 8px;
+
+  .portTag {
+    background: #e6f7ff;
+    color: #1890ff;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-weight: 500;
+    font-size: 13px;
+    border: 1px solid #91d5ff;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: #1890ff;
+      color: white;
+      border-color: #1890ff;
+    }
+  }
+
+  .arrow {
+    color: #1890ff;
+    margin: 0 8px;
+  }
+}
+
+.dateText {
+  color: #333;
+  font-family: monospace;
+  font-size: 13px;
+  background: #f5f5f5;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.logoContainer {
+  padding: 8px;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.logoImage {
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.capacityCard {
+  margin: 4px;
+  border-radius: 8px;
+  background: #fafafa;
+  
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.vesselContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+
+  .vesselInfo {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+    border: 1px solid #e9ecef;
+    
+    &:hover {
+      background: #fff;
+      border-color: #1890ff;
+    }
+  }
+
+  .vesselName, .vesselCapacity {
+    margin-bottom: 8px;
+
+    .label {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 4px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .value {
+      font-size: 14px;
+      color: #111;
+      font-weight: 600;
+    }
+  }
+
+  .label {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 2px;
+  }
+
+  .value {
+    font-weight: 500;
+    color: #333;
+  }
+  
+  :global {
+    .ant-select {
+      width: 100%;
+    }
+  }
+
+  .currentVessel {
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .vesselCapacity {
+    font-size: 12px;
+    color: #666;
+  }
+
+  .changeVesselBtn {
+    width: 100%;
+    height: 36px;
+    border-radius: 6px;
+    font-weight: 500;
+    background: #1890ff;
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    &:hover {
+      background: #096dd9;
+      transform: translateY(-1px);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+    
+    :global {
+      .anticon {
+        transition: transform 0.3s ease;
+      }
+    }
+    
+    &:hover :global(.anticon) {
+      transform: translateY(2px);
+    }
+  }
+}
+
+.currentVessel {
+  padding: 4px 8px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.vesselSelect {
+  :global {
+    .ant-select-selector {
+      border-radius: 6px;
+      height: 40px !important;
+      padding: 4px 11px !important;
+      
+      .ant-select-selection-search-input {
+        height: 38px !important;
+      }
+      
+      .ant-select-selection-item {
+        line-height: 32px !important;
+        font-weight: 500;
+      }
+    }
+
+    .ant-select-dropdown {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+  }
+}
+
+.pagination {
+  margin-top: 16px;
+  padding: 8px 0;
+}
+
+.awaitingRow {
+  background-color: #fff;
+}
+
+.arrivedRow {
+  background-color: #f6ffed;
+}
+
+.cancelledRow {
+  background-color: #fff1f0;
+}
+
+.editCapacityContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 8px 0;
+}
+
+.columnHeader {
+  font-weight: 600;
+  text-align: center;
+  padding: 8px 0;
+}
+
+.logoWrapper {
+  padding: 8px;
+}
+
+.status {
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  
+  &.awaiting {
+    background: #fff7e6;
+    color: #fa8c16;
+    border: 1px solid #ffd591;
+  }
+  
+  &.arrived {
+    background: #f6ffed;
+    color: #52c41a;
+    border: 1px solid #b7eb8f;
+  }
+  
+  &.cancelled {
+    background: #fff1f0;
+    color: #f5222d;
+    border: 1px solid #ffa39e;
+  }
+}
+
+.confirmModal {
+  :global {
+    .ant-modal-content {
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    
+    .ant-modal-header {
+      background: #f8f9fa;
+      padding: 16px 24px;
+      border-bottom: 1px solid #f0f0f0;
+      
+      .ant-modal-title {
+        font-weight: 600;
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+.modalContent {
+  text-align: center;
+  padding: 20px 0;
+
+  .warningIcon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    color: #111;
+    margin-bottom: 16px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .vesselDetails {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 16px 0;
+    font-weight: 500;
+    color: #1890ff;
+    border: 1px solid #e9ecef;
+  }
+
+  .warningText {
+    color: #f5222d;
+    font-size: 13px;
+    margin-top: 16px;
+  }
+}
+
+.loadingPlaceholder {
+  padding: 8px 12px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  color: #999;
+  font-size: 13px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+.voyageColumn {
+  min-width: 100px;
+  
+  span {
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: #f0f2f5;
+    font-size: 12px;
+  }
+}
+
+.voyageNumber {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #f0f7ff;
+  border: 1px solid #91d5ff;
+  border-radius: 16px;
+  font-size: 13px;
+  color: #1890ff;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background: #e6f7ff;
+    border-color: #1890ff;
+  }
+}
+
+.loadingPlaceholder {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #f5f5f5;
+  border-radius: 16px;
+  font-size: 13px;
+  color: #999;
+  animation: pulse 1.5s infinite;
+}
+
+.noVoyageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+}
+
+.createVoyageBtn {
+  background: #1890ff;
+  border: none;
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 13px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  
+  &:hover {
+    background: #40a9ff;
+    transform: translateY(-1px);
+  }
+}
+
+.voyageContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+
+  .voyageNumber {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #f0f7ff;
+    border: 1px solid #91d5ff;
+    border-radius: 16px;
+    font-size: 13px;
+    color: #1890ff;
+    font-weight: 500;
+    
+    &:hover {
+      background: #e6f7ff;
+      border-color: #1890ff;
+    }
+  }
+}
+
+.deleteVoyageBtn {
+  padding: 4px;
+  height: auto;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+.editVoyageBtn {
+  padding: 4px;
+  height: auto;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+  color: #1890ff;
+  
+  &:hover {
+    opacity: 1;
+    transform: scale(1.1);
+    color: #40a9ff;
+  }
+}
+
+.createVoyageModal {
+  :global {
+    .ant-form-item {
+      margin-bottom: 16px;
+    }
+
+    .ant-input-number {
+      width: 100%;
+    }
+  }
+}
+
+.tripDetails {
+  margin-top: 8px;
+  padding: 12px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+
+  .detailRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 4px 0;
+    border-bottom: 1px dashed #e8e8e8;
+
+    &:last-child {
+      margin-bottom: 0;
+      border-bottom: none;
+    }
+
+    :global {
+      .ant-typography-success {
+        color: #52c41a;
+        font-weight: 500;
+      }
+
+      .ant-typography-warning {
+        color: #faad14;
+        font-style: italic;
+      }
+
+      .ant-typography-secondary {
+        font-style: italic;
+      }
+    }
+  }
+}
+
+.tripDetailsWrapper {
+  background: #fafafa;
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 24px;
+  border: 1px solid #f0f0f0;
+}
+
+.tripDetailsHeader {
+  display: block;
+  margin-bottom: 16px;
+  color: #1f1f1f;
+  font-size: 16px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 12px;
+}
+
+.tripDetailsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.tripDetailItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: #1890ff;
+    box-shadow: 0 2px 8px rgba(24, 144, 255, 0.1);
+  }
+}
+
+.detailIconWrapper {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e6f7ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.detailIcon {
+  color: #1890ff;
+  font-size: 16px;
+}
+
+.detailContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  :global {
+    .ant-typography-secondary {
+      font-size: 12px;
+    }
+
+    .ant-typography-strong {
+      font-size: 14px;
+    }
+
+    .ant-tag {
+      margin: 0;
+    }
+  }
+}

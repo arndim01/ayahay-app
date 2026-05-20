@@ -1,0 +1,11 @@
+.main-container {
+  padding: 16px 18vw 40px;
+
+  @media (max-width: 1023px) {
+    padding: 24px 10vw;
+  }
+
+  video {
+    width: 100%;
+  }
+}

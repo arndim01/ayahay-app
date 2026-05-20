@@ -1,0 +1,951 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../../node_modules/.prisma/client"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["ayahay", "notification", "preference"]
+}
+
+model Trip {
+  id                       Int                    @id @default(autoincrement())
+  shipId                   Int                    @map("ship_id")
+  shippingLineId           Int                    @map("shipping_line_id")
+  srcPortId                Int                    @map("src_port_id")
+  destPortId               Int                    @map("dest_port_id")
+  departureDate            DateTime               @map("departure_date")
+  referenceNo              String                 @map("reference_number")
+  seatSelection            Boolean                @default(false) @map("seat_selection")
+  availableVehicleCapacity Int                    @map("available_vehicle_capacity")
+  vehicleCapacity          Int                    @map("vehicle_capacity")
+  bookingStartDate         DateTime               @map("booking_start_date")
+  bookingCutOffDate        DateTime               @map("booking_cut_off_date")
+  cancellationReason       String?                @map("cancellation_reason")
+  status                   String
+  rateTableId              Int                    @map("rate_table_id")
+  allowOnlineBooking       Boolean                @default(true) @map("allow_online_booking")
+  visible_to_ta            Boolean                @default(true)
+  bookingTrips             BookingTrip[]
+  bookingTripPassengers    BookingTripPassenger[]
+  bookingTripVehicles      BookingTripVehicle[]
+  disbursements            Disbursement[]
+  notifications            Notification[]
+  destPort                 Port                   @relation("destPort", fields: [destPortId], references: [id])
+  rateTable                RateTable              @relation(fields: [rateTableId], references: [id])
+  ship                     Ship                   @relation(fields: [shipId], references: [id])
+  shippingLine             ShippingLine           @relation(fields: [shippingLineId], references: [id])
+  srcPort                  Port                   @relation("srcPort", fields: [srcPortId], references: [id])
+  trip_allocation          trip_allocation[]
+  availableCabins          TripCabin[]
+  voyage                   Voyage?
+
+  @@unique([shipId, srcPortId, destPortId, departureDate])
+  @@map("trip")
+  @@schema("ayahay")
+}
+
+model TripCabin {
+  tripId                     Int                    @map("trip_id")
+  cabinId                    Int                    @map("cabin_id")
+  seatPlanId                 Int?                   @map("seat_plan_id")
+  availablePassengerCapacity Int                    @map("available_passenger_capacity")
+  passengerCapacity          Int                    @map("passenger_capacity")
+  bookingTripPassengers      BookingTripPassenger[]
+  cabin                      Cabin                  @relation(fields: [cabinId], references: [id])
+  seatPlan                   SeatPlan?              @relation(fields: [seatPlanId], references: [id])
+  trip                       Trip                   @relation(fields: [tripId], references: [id])
+
+  @@id([tripId, cabinId])
+  @@map("trip_cabin")
+  @@schema("ayahay")
+}
+
+model Ship {
+  id                         Int                    @id @default(autoincrement())
+  shippingLineId             Int                    @map("shipping_line_id")
+  name                       String
+  recommendedVehicleCapacity Int                    @map("recommended_vehicle_capacity")
+  cargoRequired              Boolean                @default(false) @map("cargo_required")
+  cabins                     Cabin[]
+  dryDocks                   DryDock[]
+  shippingLine               ShippingLine           @relation(fields: [shippingLineId], references: [id])
+  shippingLineSchedules      ShippingLineSchedule[]
+  trips                      Trip[]
+  voyages                    Voyage[]
+
+  @@map("ship")
+  @@schema("ayahay")
+}
+
+model Cabin {
+  id                           Int                    @id @default(autoincrement())
+  shipId                       Int                    @map("ship_id")
+  cabinTypeId                  Int                    @map("cabin_type_id")
+  defaultSeatPlanId            Int?                   @map("default_seat_plan_id")
+  name                         String
+  recommendedPassengerCapacity Int                    @map("recommended_passenger_capacity")
+  bookingTripPassengers        BookingTripPassenger[] @relation("cabin")
+  preferredByPassengers        BookingTripPassenger[] @relation("preferredCabin")
+  cabinType                    CabinType              @relation(fields: [cabinTypeId], references: [id])
+  defaultSeatPlan              SeatPlan?              @relation(fields: [defaultSeatPlanId], references: [id])
+  ship                         Ship                   @relation(fields: [shipId], references: [id])
+  rateTableRows                RateTableRow[]
+  tripSpecificInfo             TripCabin[]
+
+  @@map("cabin")
+  @@schema("ayahay")
+}
+
+model SeatPlan {
+  id             Int          @id @default(autoincrement())
+  shippingLineId Int          @map("shipping_line_id")
+  name           String
+  rowCount       Int          @map("row_count")
+  columnCount    Int          @map("column_count")
+  cabins         Cabin[]
+  seats          Seat[]
+  shippingLine   ShippingLine @relation(fields: [shippingLineId], references: [id])
+  trips          TripCabin[]
+
+  @@map("seat_plan")
+  @@schema("ayahay")
+}
+
+model Seat {
+  id                    Int                    @id @default(autoincrement())
+  seatPlanId            Int                    @map("seat_plan_id")
+  seatTypeId            Int                    @map("seat_type_id")
+  name                  String
+  rowNumber             Int                    @map("row_number")
+  columnNumber          Int                    @map("column_number")
+  bookingTripPassengers BookingTripPassenger[]
+  seatPlan              SeatPlan               @relation(fields: [seatPlanId], references: [id])
+  seatType              SeatType               @relation(fields: [seatTypeId], references: [id])
+
+  @@map("seat")
+  @@schema("ayahay")
+}
+
+model ShippingLine {
+  id                    Int                        @id @default(autoincrement())
+  name                  String
+  address               String
+  faxNo                 String?                    @map("fax_number")
+  subsidiary            String?
+  telephoneNo           String                     @map("telephone_number")
+  logoFilename          String?                    @map("logo_filename")
+  accounts              Account[]
+  bookings              Booking[]
+  cabinTypes            CabinType[]
+  rateTables            RateTable[]
+  seatPlans             SeatPlan[]
+  seatTypes             SeatType[]
+  ships                 Ship[]
+  shippingLinePorts     ShippingLinePort[]
+  schedules             ShippingLineSchedule[]
+  tempBookings          TempBooking[]
+  travelAgencies        TravelAgencyShippingLine[]
+  trips                 Trip[]
+  webhooks              Webhook[]
+  passengerInformations PassengerInformation[]
+
+  @@map("shipping_line")
+  @@schema("ayahay")
+}
+
+model ShippingLineSchedule {
+  id                      Int          @id @default(autoincrement())
+  shippingLineId          Int          @map("shipping_line_id")
+  srcPortId               Int          @map("src_port_id")
+  destPortId              Int          @map("dest_port_id")
+  shipId                  Int          @map("ship_id")
+  name                    String
+  departureHour           Int          @map("departure_hour")
+  departureMinute         Int          @map("departure_minute")
+  daysBeforeBookingStart  Int          @map("days_before_booking_start")
+  daysBeforeBookingCutOff Int          @map("days_before_booking_cut_off")
+  rateTableId             Int          @map("rate_table_id")
+  destPort                Port         @relation("destPort", fields: [destPortId], references: [id])
+  rateTable               RateTable    @relation(fields: [rateTableId], references: [id])
+  ship                    Ship         @relation(fields: [shipId], references: [id])
+  shippingLine            ShippingLine @relation(fields: [shippingLineId], references: [id])
+  srcPort                 Port         @relation("srcPort", fields: [srcPortId], references: [id])
+
+  @@map("shipping_line_schedule")
+  @@schema("ayahay")
+}
+
+model Port {
+  id                    Int                    @id @default(autoincrement())
+  name                  String
+  code                  String
+  shippingLinePorts     ShippingLinePort[]
+  schedulesDest         ShippingLineSchedule[] @relation("destPort")
+  schedulesSrc          ShippingLineSchedule[] @relation("srcPort")
+  tripsDest             Trip[]                 @relation("destPort")
+  tripsSrc              Trip[]                 @relation("srcPort")
+  passengerInformations PassengerInformation[]
+
+  @@map("port")
+  @@schema("ayahay")
+}
+
+model Passenger {
+  id                    Int                    @id @default(autoincrement())
+  buddyId               Int?                   @map("buddy_id")
+  firstName             String                 @map("first_name")
+  lastName              String                 @map("last_name")
+  occupation            String
+  sex                   String
+  civilStatus           String                 @map("civil_status")
+  birthday              DateTime?
+  address               String
+  nationality           String
+  discountType          String?                @map("discount_type")
+  mobile_number         String?
+  account               Account?
+  bookingTripPassengers BookingTripPassenger[]
+  buddy                 Passenger?             @relation("PassengerBuddies", fields: [buddyId], references: [id])
+  buddies               Passenger[]            @relation("PassengerBuddies")
+
+  @@map("passenger")
+  @@schema("ayahay")
+}
+
+model Vehicle {
+  id                           Int                  @id @default(autoincrement())
+  accountId                    String?              @map("account_id")
+  vehicleTypeId                Int                  @map("vehicle_type_id")
+  plateNo                      String               @map("plate_number")
+  modelName                    String               @map("model_name")
+  modelYear                    Int                  @map("model_year")
+  officialReceiptUrl           String               @map("official_receipt_url")
+  certificateOfRegistrationUrl String               @map("certificate_of_registration_url")
+  bookingTripVehicles          BookingTripVehicle[]
+  account                      Account?             @relation(fields: [accountId], references: [id])
+  vehicleType                  VehicleType          @relation(fields: [vehicleTypeId], references: [id])
+
+  @@map("vehicle")
+  @@schema("ayahay")
+}
+
+model Booking {
+  id                         String                 @id
+  createdByAccountId         String?                @map("created_by_account_id")
+  referenceNo                String                 @map("reference_no")
+  paymentStatus              String                 @map("payment_status")
+  totalPrice                 Float                  @map("total_price")
+  bookingType                String                 @map("booking_type")
+  createdAt                  DateTime               @map("created_at")
+  contactEmail               String?                @map("contact_email")
+  bookingStatus              String                 @map("booking_status")
+  failureCancellationRemarks String?                @map("failure_cancellation_remarks")
+  voucherCode                String?                @map("voucher_code")
+  isBookingRequest           Boolean                @map("is_booking_request")
+  shippingLineId             Int                    @map("shipping_line_id")
+  approvedByAccountId        String?                @map("approved_by_account_id")
+  consigneeName              String?                @map("consignee_name")
+  freightRateReceipt         String?                @map("freight_rate_receipt")
+  contactMobile              String?                @map("contact_mobile")
+  cancellationType           String?                @map("cancellation_type")
+  firstTripId                Int?                   @map("first_trip_id")
+  priceWithoutMarkup         Float                  @map("price_without_markup")
+  remarks                    String?
+  approvedByAccount          Account?               @relation("approvedByAccount", fields: [approvedByAccountId], references: [id])
+  createdByAccount           Account?               @relation("createdByAccount", fields: [createdByAccountId], references: [id])
+  shippingLine               ShippingLine           @relation(fields: [shippingLineId], references: [id])
+  voucher                    Voucher?               @relation(fields: [voucherCode], references: [code])
+  bookingPaymentItems        BookingPaymentItem[]
+  bookingTrips               BookingTrip[]
+  bookingTripPassengers      BookingTripPassenger[]
+  bookingTripVehicles        BookingTripVehicle[]
+
+  @@map("booking")
+  @@schema("ayahay")
+}
+
+model BookingTrip {
+  bookingId             String                 @map("booking_id")
+  tripId                Int                    @map("trip_id")
+  booking               Booking                @relation(fields: [bookingId], references: [id])
+  trip                  Trip                   @relation(fields: [tripId], references: [id])
+  bookingTripPassengers BookingTripPassenger[]
+  bookingTripVehicles   BookingTripVehicle[]
+
+  @@id([bookingId, tripId])
+  @@map("booking_trip")
+  @@schema("ayahay")
+}
+
+model BookingTripPassenger {
+  bookingId           String               @map("booking_id")
+  tripId              Int                  @map("trip_id")
+  passengerId         Int                  @map("passenger_id")
+  cabinId             Int                  @map("cabin_id")
+  seatId              Int?                 @map("seat_id")
+  meal                String?
+  totalPrice          Float                @map("total_price")
+  checkInDate         DateTime?            @map("check_in_date")
+  drivesVehicleId     Int?                 @map("drives_vehicle_id")
+  discountType        String?              @map("discount_type")
+  removedReason       String?              @map("removed_reason")
+  removedReasonType   String?              @map("removed_reason_type")
+  preferredCabinId    Int?                 @map("preferred_cabin_id")
+  priceWithoutMarkup  Float                @map("price_without_markup")
+  bookingPaymentItems BookingPaymentItem[]
+  booking             Booking              @relation(fields: [bookingId], references: [id])
+  drivesVehicle       BookingTripVehicle?  @relation(fields: [bookingId, tripId, drivesVehicleId], references: [bookingId, tripId, vehicleId])
+  bookingTrip         BookingTrip          @relation(fields: [bookingId, tripId], references: [bookingId, tripId])
+  cabin               Cabin                @relation("cabin", fields: [cabinId], references: [id])
+  passenger           Passenger            @relation(fields: [passengerId], references: [id])
+  preferredCabin      Cabin?               @relation("preferredCabin", fields: [preferredCabinId], references: [id])
+  seat                Seat?                @relation(fields: [seatId], references: [id])
+  tripCabin           TripCabin            @relation(fields: [tripId, cabinId], references: [tripId, cabinId])
+  trip                Trip                 @relation(fields: [tripId], references: [id])
+
+  @@id([bookingId, tripId, passengerId])
+  @@unique([bookingId, tripId, drivesVehicleId])
+  @@map("booking_trip_passenger")
+  @@schema("ayahay")
+}
+
+model BookingTripVehicle {
+  bookingId           String                @map("booking_id")
+  tripId              Int                   @map("trip_id")
+  vehicleId           Int                   @map("vehicle_id")
+  totalPrice          Float                 @map("total_price")
+  checkInDate         DateTime?             @map("check_in_date")
+  removedReason       String?               @map("removed_reason")
+  removedReasonType   String?               @map("removed_reason_type")
+  priceWithoutMarkup  Float                 @map("price_without_markup")
+  bookingPaymentItems BookingPaymentItem[]
+  passengerDriver     BookingTripPassenger?
+  booking             Booking               @relation(fields: [bookingId], references: [id])
+  bookingTrip         BookingTrip           @relation(fields: [bookingId, tripId], references: [bookingId, tripId])
+  trip                Trip                  @relation(fields: [tripId], references: [id])
+  vehicle             Vehicle               @relation(fields: [vehicleId], references: [id])
+
+  @@id([bookingId, tripId, vehicleId])
+  @@map("booking_trip_vehicle")
+  @@schema("ayahay")
+}
+
+model TempBooking {
+  id                         Int          @id @default(autoincrement())
+  createdByAccountId         String?      @map("created_by_account_id")
+  totalPrice                 Float        @map("total_price")
+  bookingType                String       @map("booking_type")
+  paymentReference           String?      @map("payment_reference")
+  createdAt                  DateTime     @map("created_at")
+  contactEmail               String?      @map("contact_email")
+  voucherCode                String?      @map("voucher_code")
+  isBookingRequest           Boolean      @map("is_booking_request")
+  shippingLineId             Int          @map("shipping_line_id")
+  failureCancellationRemarks String?      @map("failure_cancellation_remarks")
+  approvedByAccountId        String?      @map("approved_by_account_id")
+  bookingTripsJson           Json         @map("booking_trips_json")
+  bookingPaymentItemsJson    Json         @map("booking_payment_items_json")
+  consigneeName              String?      @map("consignee_name")
+  contactMobile              String?      @map("contact_mobile")
+  priceWithoutMarkup         Float        @map("price_without_markup")
+  remarks                    String?
+  approvedByAccount          Account?     @relation("approvedByAccount", fields: [approvedByAccountId], references: [id])
+  createdByAccount           Account?     @relation("createdByAccount", fields: [createdByAccountId], references: [id])
+  shippingLine               ShippingLine @relation(fields: [shippingLineId], references: [id])
+  voucher                    Voucher?     @relation(fields: [voucherCode], references: [code])
+
+  @@map("temp_booking")
+  @@schema("ayahay")
+}
+
+model Account {
+  id                   String                @id
+  passengerId          Int?                  @unique @map("passenger_id")
+  shippingLineId       Int?                  @map("shipping_line_id")
+  email                String
+  role                 String
+  apiKey               String?               @map("api_key")
+  travelAgencyId       Int?                  @map("travel_agency_id")
+  clientId             Int?                  @map("client_id")
+  emailConsent         Boolean               @default(false) @map("email_consent")
+  profile_picture      String?
+  qr_code              String?
+  client               Client?               @relation(fields: [clientId], references: [id])
+  passenger            Passenger?            @relation(fields: [passengerId], references: [id])
+  shippingLine         ShippingLine?         @relation(fields: [shippingLineId], references: [id])
+  travelAgency         TravelAgency?         @relation(fields: [travelAgencyId], references: [id])
+  notifications        AccountNotification[]
+  bookingsApproved     Booking[]             @relation("approvedByAccount")
+  bookingsCreated      Booking[]             @relation("createdByAccount")
+  bookingPaymentItems  BookingPaymentItem[]
+  disbursements        Disbursement[]
+  tempBookingsApproved TempBooking[]         @relation("approvedByAccount")
+  tempBookingsCreated  TempBooking[]         @relation("createdByAccount")
+  trip_allocation      trip_allocation[]
+  vehicles             Vehicle[]
+  myVouchers           Voucher[]
+
+  @@map("account")
+  @@schema("ayahay")
+}
+
+model CabinType {
+  id             Int          @id @default(autoincrement())
+  shippingLineId Int          @map("shipping_line_id")
+  name           String
+  description    String
+  cabins         Cabin[]
+  shippingLine   ShippingLine @relation(fields: [shippingLineId], references: [id])
+
+  @@map("cabin_type")
+  @@schema("ayahay")
+}
+
+model SeatType {
+  id             Int          @id @default(autoincrement())
+  shippingLineId Int          @map("shipping_line_id")
+  name           String
+  description    String
+  seats          Seat[]
+  shippingLine   ShippingLine @relation(fields: [shippingLineId], references: [id])
+
+  @@map("seat_type")
+  @@schema("ayahay")
+}
+
+model Notification {
+  id                   Int                   @id @default(autoincrement())
+  tripId               Int?                  @map("trip_id")
+  subject              String
+  body                 String
+  dateCreated          DateTime              @map("date_created")
+  accountNotifications AccountNotification[]
+  trip                 Trip?                 @relation(fields: [tripId], references: [id])
+
+  @@map("notification")
+  @@schema("ayahay")
+}
+
+model AccountNotification {
+  accountId      String       @map("account_id")
+  notificationId Int          @map("notification_id")
+  isRead         Boolean      @map("is_read")
+  account        Account      @relation(fields: [accountId], references: [id])
+  notification   Notification @relation(fields: [notificationId], references: [id])
+
+  @@id([accountId, notificationId])
+  @@map("account_notification")
+  @@schema("ayahay")
+}
+
+model VehicleType {
+  id            Int            @id @default(autoincrement())
+  name          String
+  description   String
+  rateTableRows RateTableRow[]
+  vehicles      Vehicle[]
+
+  @@map("vehicle_type")
+  @@schema("ayahay")
+}
+
+model BookingPaymentItem {
+  id                   Int                   @id @default(autoincrement())
+  bookingId            String                @map("booking_id")
+  tripId               Int?                  @map("trip_id")
+  passengerId          Int?                  @map("passenger_id")
+  vehicleId            Int?                  @map("vehicle_id")
+  price                Float
+  description          String
+  type                 String
+  createdAt            DateTime              @map("created_at")
+  createdByAccountId   String?               @map("created_by_account_id")
+  booking              Booking               @relation(fields: [bookingId], references: [id])
+  bookingTripPassenger BookingTripPassenger? @relation(fields: [bookingId, tripId, passengerId], references: [bookingId, tripId, passengerId])
+  bookingTripVehicle   BookingTripVehicle?   @relation(fields: [bookingId, tripId, vehicleId], references: [bookingId, tripId, vehicleId])
+  createdByAccount     Account?              @relation(fields: [createdByAccountId], references: [id])
+
+  @@map("booking_payment_item")
+  @@schema("ayahay")
+}
+
+model Voyage {
+  id      Int      @id @default(autoincrement())
+  shipId  Int      @map("ship_id")
+  tripId  Int?     @unique @map("trip_id")
+  number  Int
+  date    DateTime
+  remarks String
+  ship    Ship     @relation(fields: [shipId], references: [id])
+  trip    Trip?    @relation(fields: [tripId], references: [id])
+
+  @@map("voyage")
+  @@schema("ayahay")
+}
+
+model DryDock {
+  id     Int      @id @default(autoincrement())
+  shipId Int      @map("ship_id")
+  date   DateTime
+  ship   Ship     @relation(fields: [shipId], references: [id])
+
+  @@map("dry_dock")
+  @@schema("ayahay")
+}
+
+model Disbursement {
+  id                 Int      @id @default(autoincrement())
+  date               DateTime
+  officialReceipt    String?  @map("official_receipt")
+  paidTo             String   @map("paid_to")
+  description        String
+  purpose            String
+  amount             Float
+  tripId             Int      @map("trip_id")
+  createdAt          DateTime @map("created_at")
+  createdByAccountId String   @map("created_by_account_id")
+  createdByAccount   Account  @relation(fields: [createdByAccountId], references: [id])
+  trip               Trip     @relation(fields: [tripId], references: [id])
+
+  @@map("disbursement")
+  @@schema("ayahay")
+}
+
+model Voucher {
+  code               String        @id
+  createdByAccountId String        @map("created_by_account_id")
+  description        String
+  discountFlat       Float         @map("discount_flat")
+  discountPercent    Float         @map("discount_percent")
+  numberOfUses       Int?          @map("number_of_uses")
+  remainingUses      Int?          @map("remaining_uses")
+  expiry             DateTime
+  minVehicles        Int?          @map("min_vehicles")
+  canBookOnline      Boolean       @map("can_book_online")
+  bookings           Booking[]
+  tempBookings       TempBooking[]
+  createdByAccount   Account       @relation(fields: [createdByAccountId], references: [id])
+
+  @@map("voucher")
+  @@schema("ayahay")
+}
+
+model TravelAgency {
+  id            Int                        @id @default(autoincrement())
+  name          String
+  accounts      Account[]
+  markups       RateTableMarkup[]
+  shippingLines TravelAgencyShippingLine[]
+  webhooks      Webhook[]
+
+  @@map("travel_agency")
+  @@schema("ayahay")
+}
+
+model TravelAgencyShippingLine {
+  travelAgencyId Int          @map("travel_agency_id")
+  shippingLineId Int          @map("shipping_line_id")
+  shippingLine   ShippingLine @relation(fields: [shippingLineId], references: [id])
+  travelAgency   TravelAgency @relation(fields: [travelAgencyId], references: [id])
+
+  @@id([travelAgencyId, shippingLineId])
+  @@map("travel_agency_shipping_line")
+  @@schema("ayahay")
+}
+
+model Webhook {
+  id             Int           @id @default(autoincrement())
+  shippingLineId Int?          @map("shipping_line_id")
+  travelAgencyId Int?          @map("travel_agency_id")
+  type           String
+  url            String
+  shippingLine   ShippingLine? @relation(fields: [shippingLineId], references: [id])
+  travelAgency   TravelAgency? @relation(fields: [travelAgencyId], references: [id])
+
+  @@index([type], type: Hash)
+  @@map("webhook")
+  @@schema("ayahay")
+}
+
+model Client {
+  id       Int               @id @default(autoincrement())
+  name     String
+  accounts Account[]
+  markups  RateTableMarkup[]
+
+  @@map("client")
+  @@schema("ayahay")
+}
+
+model RateTable {
+  id             Int                    @id @default(autoincrement())
+  shippingLineId Int                    @map("shipping_line_id")
+  name           String
+  shippingLine   ShippingLine           @relation(fields: [shippingLineId], references: [id])
+  markups        RateTableMarkup[]
+  rows           RateTableRow[]
+  schedules      ShippingLineSchedule[]
+  trips          Trip[]
+
+  @@map("rate_table")
+  @@schema("ayahay")
+}
+
+model RateTableRow {
+  id            Int          @id @default(autoincrement())
+  rateTableId   Int          @map("rate_table_id")
+  cabinId       Int?         @map("cabin_id")
+  vehicleTypeId Int?         @map("vehicle_type_id")
+  fare          Float
+  canBookOnline Boolean      @map("can_book_online")
+  discountType  String?      @map("discount_type")
+  cabin         Cabin?       @relation(fields: [cabinId], references: [id])
+  rateTable     RateTable    @relation(fields: [rateTableId], references: [id])
+  vehicleType   VehicleType? @relation(fields: [vehicleTypeId], references: [id])
+
+  @@map("rate_table_row")
+  @@schema("ayahay")
+}
+
+model RateTableMarkup {
+  id                       Int           @id @default(autoincrement())
+  rateTableId              Int           @map("rate_table_id")
+  travelAgencyId           Int?          @map("travel_agency_id")
+  clientId                 Int?          @map("client_id")
+  markupFlat               Float         @map("markup_flat")
+  markupPercent            Float         @map("markup_percent")
+  markupMaxFlat            Float         @map("markup_max_flat")
+  markupFlatCargo          Float         @default(0.0) @map("markup_flat_cargo")
+  markupPercentCargo       Float         @default(0.0) @map("markup_percent_cargo")
+  markupMaxFlatCargo       Float         @default(0.0) @map("markup_max_flat_cargo")
+  commission_flat          Float         @default(0.0)
+  commission_percent       Float         @default(0.0)
+  commission_flat_cargo    Float         @default(0.0)
+  commission_percent_cargo Float         @default(0.0)
+  client                   Client?       @relation(fields: [clientId], references: [id])
+  rateTable                RateTable     @relation(fields: [rateTableId], references: [id])
+  travelAgency             TravelAgency? @relation(fields: [travelAgencyId], references: [id])
+
+  @@map("rate_table_markup")
+  @@schema("ayahay")
+}
+
+model ShippingLinePort {
+  shippingLineId Int          @map("shipping_line_id")
+  portId         Int          @map("port_id")
+  port           Port         @relation(fields: [portId], references: [id])
+  shippingLine   ShippingLine @relation(fields: [shippingLineId], references: [id])
+
+  @@id([shippingLineId, portId])
+  @@map("shipping_line_port")
+  @@schema("ayahay")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model old_bookings {
+  booking_id   String?
+  trip_id      Int?
+  passenger_id Int?
+  total_price  Float?
+  role         String?
+
+  @@ignore
+  @@schema("ayahay")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model old_passenger_bookings {
+  booking_id       String?
+  trip_id          Int?
+  passenger_id     Int?
+  total_price      Float?
+  role             String?
+  discount_flat    Float?
+  discount_percent Float?
+
+  @@ignore
+  @@schema("ayahay")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model old_vehicle_bookings {
+  booking_id       String?
+  trip_id          Int?
+  vehicle_id       Int?
+  total_price      Float?
+  role             String?
+  discount_flat    Float?
+  discount_percent Float?
+
+  @@ignore
+  @@schema("ayahay")
+}
+
+model PassengerInformation {
+  id             Int          @id @default(autoincrement())
+  shippingLineId Int          @map("shipping_line_id")
+  portId         Int          @map("port_id")
+  data           Json
+  createdAt      DateTime     @default(now()) @map("created_at")
+  updatedAt      DateTime     @updatedAt @map("updated_at")
+  createdBy      String?      @map("created_by")
+  updatedBy      String?      @map("updated_by")
+  port           Port         @relation(fields: [portId], references: [id])
+  shippingLine   ShippingLine @relation(fields: [shippingLineId], references: [id])
+
+  @@unique([shippingLineId, portId])
+  @@map("passenger_information")
+  @@schema("preference")
+}
+
+model BookingCutoff {
+  id                     Int       @id @default(autoincrement())
+  shipping_line_id       Int       @default(0)
+  origin                 Int       @default(0)
+  destination            Int       @default(0)
+  cut_off_condition_type String    @db.VarChar(50)
+  cut_off_value          Int       @default(0)
+  created_at             DateTime? @default(now()) @db.Timestamp(6)
+  created_by             String?   @db.VarChar(255)
+  updated_at             DateTime? @default(now()) @updatedAt @db.Timestamp(6)
+  updated_by             String?   @db.VarChar(255)
+
+  @@index([origin, destination], map: "idx_origin_destination")
+  @@index([shipping_line_id], map: "idx_shipping_line_id")
+  @@map("booking_cutoff")
+  @@schema("preference")
+}
+
+model EmailQueue {
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  template_id     Int
+  recipient_email String    @db.VarChar(255)
+  cc              String?
+  bcc             String?
+  subject         String    @db.VarChar(255)
+  body_variables  Json?
+  attachments     Json?
+  status          String?   @default("Pending") @db.VarChar(50)
+  retry_count     Int?      @default(0)
+  error_message   String?
+  priority        Int?      @default(5)
+  scheduled_at    DateTime? @db.Timestamp(6)
+  created_at      DateTime? @default(now()) @db.Timestamp(6)
+  updated_at      DateTime? @default(now()) @updatedAt @db.Timestamp(6)
+  sender_email    String?   @db.VarChar(255)
+  tags            Json?
+  is_urgent       Boolean?  @default(false)
+  template        Template  @relation(fields: [template_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_template")
+
+  @@map("email_queue")
+  @@schema("notification")
+}
+
+model Template {
+  id               Int          @id @default(autoincrement())
+  name             String       @db.VarChar(255)
+  description      String?
+  type             String       @db.VarChar(50)
+  content          String
+  subject          String?      @db.VarChar(255)
+  variables        Json?
+  created_at       DateTime?    @default(now()) @db.Timestamp(6)
+  updated_at       DateTime?    @default(now()) @updatedAt @db.Timestamp(6)
+  status           String?      @default("active") @db.VarChar(50)
+  version          Int?         @default(1)
+  default_language String?      @default("en") @db.VarChar(10)
+  category         String?      @db.VarChar(100)
+  email_queue      EmailQueue[]
+
+  @@map("template")
+  @@schema("notification")
+}
+
+model Thumbnail {
+  id             Int     @id @default(autoincrement())
+  shippingLineId Int?    @map("shipping_line_id")
+  label          String?
+  filename       String?
+  location       String?
+  imageOrder     Int?    @map("image_order")
+
+  @@map("thumbnail")
+  @@schema("preference")
+}
+
+model HeaderSection {
+  id              Int     @id @default(autoincrement())
+  shippingLineId  Int?    @map("shipping_line_id")
+  showPromos      Boolean? @map("show_promos")
+  showRoutes      Boolean? @map("show_routes")
+  showResources   Boolean? @map("show_resources")
+  showAboutUs     Boolean? @map("show_about_us")
+
+  @@map("header_section")
+  @@schema("preference")
+}
+
+model HeroSection {
+  id             Int     @id @default(autoincrement())
+  shippingLineId Int?    @map("shipping_line_id")
+  label          String?
+  filename       String?
+  youtubeUrl     String? @map("youtube_url")
+  fileType       String? @map("file_type")
+  caption1       String? @map("caption_1")
+  caption2       String? @map("caption_2")
+
+  @@map("hero_section")
+  @@schema("preference")
+}
+
+model FooterSection {
+  id                            Int      @id @default(autoincrement())
+  shippingLineId                Int?     @map("shipping_line_id")
+  hasAboutUs                    Boolean? @default(false) @map("has_about_us")
+  hasPress                      Boolean? @default(false) @map("has_press")
+  hasFaq                        Boolean? @default(false) @map("has_faq")
+  hasPrivacyPolicy              Boolean? @default(false) @map("has_privacy_policy")
+  hasTermsAndConditions         Boolean? @default(false) @map("has_terms_and_conditions")
+  primaryContactNumber          String?  @map("primary_contact_number")
+  primaryContactNumberNetwork   String?  @map("primary_contact_number_network")
+  secondaryContactNumber        String?  @map("secondary_contact_number")
+  secondaryContactNumberNetwork String?  @map("secondary_contact_number_network")
+  email                         String?  @unique
+  twitterUrl                    String?  @map("twitter_url")
+  facebookUrl                   String?  @map("facebook_url")
+  linkedInUrl                   String?  @map("linked_in_url")
+  instagramUrl                  String?  @map("instagram_url")
+
+  @@map("footer_section")
+  @@schema("preference")
+}
+
+model AboutUs {
+  id                       Int     @id @default(autoincrement())
+  shippingLineId           Int?    @map("shipping_line_id")
+  imageFilename            String? @map("image_filename")
+  imageLabel               String? @map("image_label")
+  imageCaption             String? @map("image_caption")
+  welcomeTitle             String? @map("welcome_title")
+  welcomeDescription       String? @map("welcome_description")
+  ourStoryTitle            String? @map("our_story_title")
+  ourStoryDescription      String? @map("our_story_description")
+  ourExpertiseTitle        String? @map("our_expertise_title")
+  ourExpertiseDescription  String? @map("our_expertise_description")
+  ourCoreValues            String? @map("our_core_values")
+  tabsBackgroundColor      String? @map("tabs_background_color")
+
+  @@map("about_us")
+  @@schema("preference")
+}
+
+model ContactUs {
+  id                      Int     @id @default(autoincrement())
+  shippingLineId          Int?    @map("shipping_line_id")
+  headingText             String? @map("heading_text")
+  headingDescription      String? @map("heading_description")
+  contactNumber           String? @map("contact_number")
+  email                   String?
+  address                 String?
+  backgroundImageFilename String? @map("background_image_filename")
+
+  @@map("contact_us")
+  @@schema("preference")
+}
+
+model ThemeSettings {
+  id                     Int     @id @default(autoincrement())
+  shippingLineId         Int?    @map("shipping_line_id")
+  fontStyle              String? @map("font_style")
+  backgroundColor        String? @map("background_color")
+  buttonDefaultColor     String? @map("button_default_color")
+  buttonDestructiveColor String? @map("button_destructive_color")
+  buttonOutlineColor     String? @map("button_outline_color")
+  buttonSecondaryColor   String? @map("button_secondary_color")
+  buttonGhostColor       String? @map("button_ghost_color")
+  buttonLinkColor        String? @map("button_link_color")
+  borderColor            String? @map("border_color")
+  iconColor              String? @map("icon_color")
+
+  @@map("theme_settings")
+  @@schema("preference")
+}
+
+model TermsAndConditions {
+  id             Int      @id @default(autoincrement())
+  name           String   @db.VarChar(255)
+  shippingLineId Int      @map("shipping_line_id")
+  content        String?
+  status         String?  @default("active") @db.VarChar(50)
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  updatedAt      DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamp(6)
+
+  @@map("terms_and_conditions")
+  @@schema("preference")
+}
+
+model trip_allocation {
+  id                 Int     @id @default(autoincrement())
+  trip_id            Int
+  cabin_id           Int
+  account_id         String  @db.VarChar(255)
+  allocated_capacity Int
+  used_capacity      Int     @default(0)
+  account            Account @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_trip_allocation_account")
+  trip               Trip    @relation(fields: [trip_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "fk_trip_allocation_trip")
+
+  @@index([trip_id, account_id], map: "idx_trip_account")
+  @@schema("ayahay")
+}
+
+model Faq {
+  id              Int     @id @default(autoincrement())
+  shippingLineId  Int?    @map("shipping_line_id")
+  category        String? 
+  question        String?
+  answer          String?
+
+  @@map("faq")
+  @@schema("preference")
+}
+
+model Press {
+  id              Int       @id @default(autoincrement())
+  shippingLineId  Int?      @map("shipping_line_id")
+  title           String?
+  content         String?
+  publishedDate   DateTime? @map("published_date")
+  isPublish       Boolean   @map("is_publish") @default(false)
+  videoUrl        String?   @map("video_url")
+  articleUrl      String?   @map("article_url")
+  type            String?
+  category        String?
+
+  @@map("press")
+  @@schema("preference")
+}
+
+model PrivacyPolicy {
+  id             Int     @id @default(autoincrement())
+  shippingLineId Int?    @map("shipping_line_id")
+  titleId        String? @map("title_id")
+  title          String?
+  content        Json?
+
+  @@map("privacy_policy")
+  @@schema("preference")
+}
+
+model shipping_line_route {
+  id                     Int  @id @default(autoincrement())
+  ship_id                Int?
+  src_port_id            Int?
+  dest_port_id           Int?
+  estimated_time_arrival Int? @default(120)
+
+  @@schema("ayahay")
+}

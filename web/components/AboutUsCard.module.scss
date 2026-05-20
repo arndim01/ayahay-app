@@ -1,0 +1,42 @@
+.containerFluid {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 50px 128px;
+
+  h2 {
+    padding-bottom: 15px;
+    font-size: clamp(25px, 5vw, 30px);
+    line-height: 1.15;
+    font-weight: 600;
+  }
+
+  h3 {
+    font-size: clamp(16px, 3vw, 18px);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  p {
+    font-size: clamp(15px, 3vw, 18px);
+    text-align: center;
+    margin: 25px 50px 50px;
+    padding: 0 80px;
+
+    @media (max-width: 991px) {
+      margin: 25px 0px 50px;
+      padding: 0;
+    }
+  }
+
+  .icon {
+    font-size: clamp(45px, 3vw, 60px);
+    padding-bottom: 40px;
+  }
+
+  .rowCard {
+    width: 100%;
+    text-align: center;
+  }
+}

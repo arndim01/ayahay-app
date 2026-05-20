@@ -1,0 +1,13 @@
+#faq {
+  padding: 16px 32px;
+
+  ul,
+  ol {
+    list-style-position: inside;
+
+    ul,
+    ol {
+      padding: 0 16px;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+.main-container {
+  padding: 16px 5vw;
+
+  @media (max-width: 1023px) {
+    padding: 24px 5vw;
+  }
+
+  .range-picker {
+    min-width: 20%;
+  }
+}

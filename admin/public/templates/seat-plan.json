@@ -1,0 +1,55 @@
+{
+    "name": "Demo Seat Plan",
+    "rowCount": 4,
+    "columnCount": 6,
+    "seats": [
+        {
+            "seatTypeId": 1,
+            "name": "A1",
+            "rowNumber": 1,
+            "columnNumber": 1
+        },
+        {
+            "seatTypeId": 2,
+            "name": "A2",
+            "rowNumber": 1,
+            "columnNumber": 2
+        },
+        {
+            "seatTypeId": 3,
+            "name": "A3",
+            "rowNumber": 1,
+            "columnNumber": 3
+        },
+        {
+            "seatTypeId": 4,
+            "name": "A4",
+            "rowNumber": 1,
+            "columnNumber": 4
+        },
+        {
+            "seatTypeId": 1,
+            "name": "B1",
+            "rowNumber": 2,
+            "columnNumber": 1
+        },
+        {
+            "seatTypeId": 2,
+            "name": "B2",
+            "rowNumber": 2,
+            "columnNumber": 2
+        },
+        {
+            "seatTypeId": 3,
+            "name": "B3",
+            "rowNumber": 2,
+            "columnNumber": 3
+        },
+        {
+            "seatTypeId": 4,
+            "name": "B4",
+            "rowNumber": 2,
+            "columnNumber": 4
+        }
+    ]
+}

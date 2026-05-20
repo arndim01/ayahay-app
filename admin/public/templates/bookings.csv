@@ -1,0 +1,4 @@
+Trip Reference Number,Total Price,Payment Reference,First Name,Last Name,"Occupation (Student, Unemployed, Employed, Self-Employed)","Sex (Male, Female)","Civil Status (Single, Married, Divorced, Widowed)",Birthday (YYYY-MM-DD),Nationality
+ABCD,1000,ABCD,Father,Santos,Employed,Male,Married,1999-10-20,Quezon City,Filipino
+ABCD,1000,ABCD,Mother,Santos,Self-Employed,Female,Married,1998-04-15,Quezon City,Filipino
+ABCD,1000,ABCD,Son,Santos,Unemployed,Male,Single,2015-10-08,Quezon City,Chinese

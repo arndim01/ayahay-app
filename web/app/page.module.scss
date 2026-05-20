@@ -1,0 +1,42 @@
+#home-page {
+  .landing {
+    min-height: calc(100vh - 90px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(
+      rgba(237, 240, 251, 1) 0%,
+      rgba(255, 255, 255, 1) 100%
+    );
+    padding: 32px 32px;
+
+    h1 {
+      color: #051036;
+      font-size: clamp(40px, 10vw, 60px);
+      line-height: 1.15;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    p {
+      color: #697488;
+      font-size: 16px;
+    }
+
+    .trip-search-query {
+      align-self: center;
+
+      article {
+        box-shadow: 0px 20px 40px 0px #05103612;
+      }
+
+      @media (min-width: 992px) {
+        align-self: start;
+      }
+    }
+
+    @media (min-width: 576px) {
+      padding: 32px 50px;
+    }
+  }
+}

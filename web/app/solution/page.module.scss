@@ -1,0 +1,26 @@
+.main-container {
+  padding: 16px 18vw 40px;
+
+  @media (max-width: 1023px) {
+    padding: 24px 10vw;
+  }
+
+  p {
+    font-size: 18px;
+    padding-bottom: 15px;
+  }
+
+  .image {
+    margin: auto;
+    display: block;
+    width: 600px;
+
+    @media (max-width: 670px) {
+      width: 450px;
+    }
+
+    @media (max-width: 568px) {
+      width: 300px;
+    }
+  }
+}

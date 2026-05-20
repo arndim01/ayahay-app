@@ -1,0 +1,255 @@
+.settingsContainer {
+  padding: 0 24px;
+  margin-top: 10px;  // Remove auto margin
+  width: 100%;
+  max-width: none;  // Remove max-width constraint
+
+  @media (max-width: 576px) {
+    padding: 0 16px;
+  }
+  
+  .settingsCard {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  }
+
+  .featureCard {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: -16px; // Move it up to remove extra space
+    overflow: hidden;
+    border: 1px solid #f0f0f0;
+    
+    &:hover {
+      box-shadow: 0 6px 24px rgba(24, 144, 255, 0.1);
+      transform: translateY(-2px);
+    }
+
+    :global {
+      .ant-card-head {
+        padding: 16px 24px;
+        border-bottom: 1px solid #f0f0f0;
+        background: #fafafa;
+      }
+
+      .ant-card-body {
+        padding: 24px;
+      }
+    }
+  }
+
+  .featureBox {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    background: #fff;
+    border-radius: 12px;
+    position: relative;
+  }
+
+  .iconWrapper {
+    background: linear-gradient(135deg, #e6f7ff 0%, #bae7ff 100%);
+    padding: 16px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(24, 144, 255, 0.15);
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: rotate(15deg);
+    }
+  }
+
+  .featureIcon {
+    font-size: 28px;
+    color: #1890ff;
+    padding: 10px;
+    background: #e6f7ff;
+    border-radius: 8px; // Changed from 50% to match card style
+    transition: all 0.3s ease;
+
+    @media (max-width: 576px) {
+      font-size: 20px;
+      padding: 8px;
+    }
+    
+    &.iconEnabled {
+      color: #52c41a;
+      animation: pulse 2s infinite;
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+      color: #73d13d;
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .featureContent {
+    flex: 1;
+    padding-right: 16px; // Add some padding on the right
+
+    h5 {
+      margin: 0 0 4px 0;
+      font-size: 15px;
+      
+      @media (max-width: 576px) {
+        font-size: 14px;
+      }
+    }
+
+    .ant-typography {
+      color: #666;
+      font-size: 13px;
+      
+      @media (max-width: 576px) {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .featureHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+
+    h5 {
+      margin: 0;
+      font-size: 18px;
+      color: #262626;
+    }
+  }
+
+  .description {
+    display: block;
+    margin-bottom: 16px;
+    line-height: 1.6;
+    color: #8c8c8c;
+  }
+
+  .statusIndicator {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed #f0f0f0;
+  }
+
+  .switchContainer {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .switch {
+    position: relative;
+    transform: scale(0.9); // Make switch slightly smaller
+    background-color: #f5f5f5;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 44px;
+    height: 22px;
+    transition: all 0.3s ease;
+    
+    &:global(.ant-switch) {
+      background-color: rgba(24, 144, 255, 0.5) !important; // Added opacity to blue color
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      
+      &::after {
+        background: #fff;
+        box-shadow: 0 2px 4px rgba(0, 35, 11, 0.2);
+        opacity: 0.9; // Added opacity to switch handle
+      }
+  
+      &:hover:not(.ant-switch-disabled) {
+        background-color: rgba(64, 169, 255, 0.7) !important; // Added opacity to hover state
+      }
+    }
+    
+    &:global(.ant-switch-checked) {
+      background-color: #52c41a !important; // Keep full opacity for enabled state
+      opacity: 1;
+      
+      &::after {
+        opacity: 1; // Full opacity for switch handle when enabled
+      }
+      
+      &:hover:not(.ant-switch-disabled) {
+        background-color: #73d13d !important;
+      }
+    }
+  
+    &.switchEnabled {
+      &:global(.ant-switch-checked) {
+        box-shadow: 0 0 8px rgba(82, 196, 26, 0.4);
+      }
+      background-color: #52c41a !important;
+      
+      &:hover {
+        background-color: #73d13d !important;
+      }
+    }
+  
+    &.switchDisabled {
+      &:not(:global(.ant-switch-checked)) {
+        box-shadow: 0 0 8px rgba(24, 144, 255, 0.4);
+      }
+      background-color: #bfbfbf !important;
+      
+      &:hover {
+        background-color: #d9d9d9 !important;
+      }
+    }
+
+    :global {
+      .ant-switch-inner {
+        font-weight: 500;
+      }
+    }
+  }
+
+  @media (max-width: 576px) {
+    padding: 0 16px;
+
+    .featureBox {
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .iconWrapper {
+      margin: 0 auto;
+    }
+
+    .featureContent {
+      text-align: center;
+    }
+
+    .featureHeader {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+}
+
+.activeText {
+  color: #52c41a !important;
+  color: #52c41a;
+  font-weight: 500;
+}
+
+.inactiveText {
+  color: #1890ff !important;
+  color: #bfbfbf;
+}

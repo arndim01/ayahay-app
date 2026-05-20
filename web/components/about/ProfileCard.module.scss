@@ -1,0 +1,11 @@
+.card {
+  max-width: 300px;
+  margin: 5px;
+  flex: 0 0 33.333333%;
+}
+
+@media only screen and (max-width: 819px) {
+  .image {
+    height: 256px;
+  }
+}

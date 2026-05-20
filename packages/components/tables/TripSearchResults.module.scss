@@ -1,0 +1,35 @@
+.results-container {
+  margin-bottom: 20px;
+}
+
+.search-result {
+  flex-grow: 1;
+}
+
+.price {
+  font-weight: 600;
+}
+
+.selected {
+  background-color: aliceblue;
+}
+
+.port-date,
+.price-action,
+.passenger-vehicle-slots {
+  @media (min-width: 992px) {
+    display: none;
+  }
+}
+
+.all-columns-except-port-date {
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
+.all-columns {
+  @media (min-width: 576px) {
+    display: none;
+  }
+}

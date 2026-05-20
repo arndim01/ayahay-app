@@ -1,0 +1,86 @@
+.main-container {
+  background-color: #f5f5f5;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 50px;
+  justify-content: space-between;
+  gap: 50px;
+
+  @media (max-width: 768px) {
+    padding: 50px 20px;
+  }
+
+  .left-container {
+    flex-direction: column;
+
+    .left-card {
+      padding: 25px 25px 1px 25px;
+      background-color: #fff;
+      border-radius: 4px;
+
+      .cabin-card {
+        border-bottom: 1px solid #dddddd;
+
+        @media (max-width: 506px) {
+          width: 85vw;
+        }
+      }
+
+      .shipping-card {
+        width: 350px;
+
+        @media (max-width: 575px) {
+          width: 80vw;
+        }
+      }
+
+      @media (max-width: 575px) {
+        padding: 15px 15px 1px 15px;
+      }
+    }
+  }
+
+  .right-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .sort-container {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  .flight-schedule-card {
+    transition: border-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    border: 3px solid transparent;
+
+    &.selected {
+      border-color: #4096ff;
+    }
+
+    &.disabled {
+      background-color: lightgray;
+
+      &:hover {
+        cursor: default;
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+.query-container {
+  max-width: 100%;
+  padding: 0 32px;
+  .search-main {
+    border: 1px solid #ddd;
+  }
+
+  @media (min-width: 576px) {
+    padding: 0 50px;
+  }
+}

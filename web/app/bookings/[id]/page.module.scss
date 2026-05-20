@@ -1,0 +1,36 @@
+.main-container {
+  padding: 25px 32px 50px;
+
+  @media (min-width: 576px) {
+    padding: 25px 100px 50px;
+  }
+
+  .top-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 25px 0px;
+    gap: 32px;
+
+    .verification-card {
+      flex: 1;
+    }
+
+    .trip-card {
+      flex: 1;
+    }
+
+    @media (min-width: 1200px) {
+      flex-direction: row;
+    }
+  }
+
+  @media print {
+    padding: 16px;
+
+    h1,
+    h2 {
+      font-size: 16px;
+    }
+  }
+}

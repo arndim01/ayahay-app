@@ -1,0 +1,213 @@
+.steps {
+  margin-bottom: 24px;
+}
+
+.bookingForm {
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+}
+
+.tripInfo {
+  margin-bottom: 24px;
+  padding: 12px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.passengerRow {
+  margin: 12px 0;
+  padding: 16px;
+  background: #fafafa;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background: #f0f0f0;
+  }
+}
+
+.rateText {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.45);
+  margin-top: 4px;
+}
+
+.denominationButtons {
+  display: flex;
+  gap: 8px;
+
+  button {
+    min-width: 40px;
+    height: 32px;
+    padding: 0 8px;
+    border-radius: 4px;
+    transition: all 0.3s;
+
+    &:hover {
+      background: #1890ff;
+      color: white;
+      border-color: #1890ff;
+    }
+  }
+}
+
+.countInput {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+
+  button {
+    min-width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .countInputField {
+    width: 60px;
+    text-align: center;
+
+    input {
+      text-align: center;
+    }
+  }
+}
+
+.totalDisplay {
+  text-align: right;
+  font-weight: 600;
+}
+
+.summarySection {
+  margin-top: 24px;
+  padding: 16px;
+  background: #f8f8f8;
+  border-radius: 4px;
+  border-top: 1px solid #e8e8e8;
+}
+
+.summaryTitle {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+  padding: 4px 0;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e8e8e8;
+  font-size: 16px;
+}
+
+.paymentForm {
+  padding: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .denominationButtons {
+    flex-wrap: wrap;
+  }
+
+  .paymentForm {
+    max-width: 100%;
+  }
+}
+
+.successModalContent {
+  .bookingReference {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    .label {
+      font-weight: 500;
+    }
+
+    .value {
+      color: #1890ff;
+    }
+  }
+
+  .summaryTable {
+    margin: 20px 0;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th,
+      td {
+        padding: 8px 12px;
+        text-align: left;
+        border: 1px solid #f0f0f0;
+      }
+
+      th {
+        background-color: #fafafa;
+        font-weight: 500;
+      }
+
+      tfoot {
+        background-color: #fafafa;
+
+        td {
+          border-top: 2px solid #f0f0f0;
+        }
+      }
+    }
+
+    .strong {
+      font-weight: 500;
+    }
+  }
+
+  .tripDetails {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #fafafa;
+    border-radius: 4px;
+
+    .sectionTitle {
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .detail {
+      margin-top: 8px;
+      color: rgba(0, 0, 0, 0.85);
+    }
+  }
+
+  .actionButtons {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    margin-top: 24px;
+  }
+}

@@ -1,0 +1,13 @@
+{
+    "name": "@ayahay/components",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@ayahay/constants": "*",
+        "@ayahay/http": "*",
+        "@ayahay/models": "*",
+        "antd": "^5.15.0",
+        "dayjs": "^1.11.7",
+        "react": "18.2.0"
+    }
+}

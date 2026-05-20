@@ -1,0 +1,23 @@
+.main-container {
+  padding: 16px 18vw 40px;
+
+  @media (max-width: 1023px) {
+    padding: 24px 10vw;
+  }
+
+  .image {
+    margin: auto;
+    display: block;
+    width: 700px;
+
+    @media (max-width: 880px) {
+      width: 500px;
+    }
+
+    @media (max-width: 630px) {
+      max-width: 100%;
+      height: auto;
+      width: auto;
+    }
+  }
+}

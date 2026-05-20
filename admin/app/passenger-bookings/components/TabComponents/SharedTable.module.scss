@@ -1,0 +1,187 @@
+.tableCard {
+  margin-bottom: 24px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  border-radius: 8px;
+  background: white;
+
+  :global {
+    .ant-card-body {
+      padding: 16px;
+    }
+
+    .ant-table {
+      background: white;
+      
+      .ant-table-thead > tr > th {
+        background: #fafafa;
+        font-weight: 500;
+        color: #666;
+        font-size: 13px;
+        padding: 12px 16px;
+        border-bottom: 1px solid #f0f0f0;
+        white-space: nowrap;
+
+        &::before {
+          display: none;
+        }
+      }
+
+      .ant-table-tbody > tr > td {
+        padding: 12px 16px;
+        color: #262626;
+        transition: background 0.3s;
+      }
+
+      .ant-table-tbody > tr:hover > td {
+        background: #fafafa;
+      }
+
+      .ant-tag {
+        border: none;
+        padding: 2px 12px;
+        border-radius: 4px;
+        font-weight: normal;
+      }
+
+      .ant-table-pagination {
+        margin: 16px 0 0;
+        
+        .ant-pagination-item-active {
+          border-color: #1890ff;
+          background: #1890ff;
+          
+          a {
+            color: white;
+          }
+        }
+
+        .ant-select-selector {
+          border-radius: 6px;
+        }
+
+        .ant-pagination-options {
+          margin-left: 16px;
+        }
+      }
+    }
+  }
+}
+
+.bookingTable {
+  :global {
+    .ant-table {
+      background: white;
+      border-radius: 8px;
+    }
+
+    .ant-table-thead > tr > th {
+      background: #fafafa;
+      font-weight: 600;
+      padding: 16px;
+      border-bottom: 2px solid #f0f0f0;
+      white-space: nowrap;
+
+      &::before {
+        display: none;
+      }
+    }
+
+    .ant-table-tbody > tr > td {
+      padding: 16px;
+      transition: background 0.3s;
+    }
+
+    .ant-table-row:hover > td {
+      background: #e6f7ff !important;
+    }
+
+    .ant-tag {
+      min-width: 80px;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .reference-tag {
+      font-family: monospace;
+      font-size: 13px;
+    }
+
+    .ant-table-pagination {
+      margin: 16px;
+    }
+
+    .statusTag {
+      padding: 4px 12px;
+      border-radius: 12px;
+      min-width: 100px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      font-size: 13px;
+      text-transform: capitalize;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-1px);
+      }
+    }
+
+    .ant-table-body {
+      min-height: 400px; // Set minimum height
+      overflow-y: auto !important; // Force vertical scroll
+      max-height: 400px;
+      
+      &::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      
+      &::-webkit-scrollbar-thumb {
+        background: #d9d9d9;
+        border-radius: 3px;
+        
+        &:hover {
+          background: #bfbfbf;
+        }
+      }
+    }
+
+    .ant-table-header {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #fafafa;
+    }
+
+    .ant-pagination {
+      padding: 16px 0 0;
+      margin-top: 8px;
+      border-top: 1px solid #f0f0f0;
+    }
+  }
+}
+
+.referenceText {
+  font-family: monospace;
+  color: #1890ff;
+  font-size: 13px;
+}
+
+.statusTag {
+  min-width: 90px;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.actionButton {
+  border-radius: 4px;
+  padding: 0 12px;
+  height: 28px;
+  font-size: 13px;
+}
+
+// Remove alternating row colors
+.evenRow, .oddRow {
+  background: white;
+}

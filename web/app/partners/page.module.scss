@@ -1,0 +1,22 @@
+.main-container {
+  padding: 16px 18vw 40px;
+
+  @media (max-width: 1023px) {
+    padding: 24px 10vw;
+  }
+
+  .image {
+    margin: auto;
+
+    @media (max-width: 670px) {
+      width: 300px;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+}

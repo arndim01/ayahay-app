@@ -1,0 +1,95 @@
+.movieContainer {
+  margin: 20px 0;
+}
+
+.movieContainer select {
+  background-color: #fff;
+  border: 0;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-left: 10px;
+  padding: 5px 15px 5px 15px;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.container {
+  perspective: 1000px;
+  margin-bottom: 30px;
+}
+
+.block {
+  background-color: #444451;
+  height: 32px;
+  width: 38px;
+  margin: 3px;
+  font-size: 13px;
+  color: #fff;
+  text-align: center;
+  // border-top-left-radius: 10px;
+  // border-top-right-radius: 10px;
+}
+
+.block.selected {
+  background-color: green;
+}
+
+.block.sold {
+  background-color: red;
+  // pointer-events: none;
+}
+
+.block:hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+.showcase .block:hover {
+  cursor: default;
+  transform: scale(1);
+}
+
+.seat:nth-of-type(3) {
+  margin-right: 18px;
+}
+
+// .seat:nth-last-of-type(2) {
+//   margin-left: 18px;
+// }
+
+.showcase {
+  background: rgba(0, 0, 0, 0.1);
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #777;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+.showcase li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+}
+.showcase li small {
+  margin-left: 2px;
+}
+
+.row {
+  display: flex;
+}
+
+p.text {
+  margin: 5px 0;
+}
+
+div.text span {
+  color: red;
+}
+
+.chart {
+  width: 400px;
+}

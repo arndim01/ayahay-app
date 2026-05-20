@@ -1,0 +1,34 @@
+{
+  "name": "ayahay",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "admin",
+    "web",
+    "api",
+    "packages/*"
+  ],
+  "prettier": {
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "jsxSingleQuote": true
+  },
+  "scripts": {
+    "api:start": "yarn workspace @ayahay/api start:dev",
+    "api:init-db": "yarn workspace @ayahay/api db:init-dev",
+    "api:reset-db": "yarn workspace @ayahay/api db:reset-dev",
+    "web:start:dev": "yarn workspace @ayahay/web start:dev",
+    "web:start:prod": "yarn workspace @ayahay/web start:prod",
+    "admin:start:dev": "yarn workspace @ayahay/admin start:dev -p 3002",
+    "admin:build:dev": "yarn workspace @ayahay/admin build:dev",
+    "admin:start:prod": "yarn workspace @ayahay/admin start:prod -p 3002"
+  },
+  "packageManager": "yarn@3.6.3",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.758.0",
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "react-icons": "^5.5.0"
+  }
+}

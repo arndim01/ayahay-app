@@ -1,0 +1,182 @@
+.main-container {
+  padding: 16px 5vw;
+
+  @media (max-width: 1023px) {
+    padding: 20px 1vw;
+  }
+
+  .range-picker {
+    min-width: 20%;
+
+    @media (max-width: 767px) {
+      width: 100%;
+    }
+  }
+
+  .port-input {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+
+    @media (max-width: 767px) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+    }
+  }
+
+  .bar-graph {
+    margin: auto;
+    margin-top: 20px;
+    width: 1350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media (max-width: 1575px) {
+      max-width: 100%;
+      height: auto;
+      width: auto;
+    }
+  }
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dashboardTable {
+  :global {
+    .ant-table {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+
+      @media (max-width: 576px) {
+        border-radius: 8px;
+      }
+    }
+
+    .ant-table-thead > tr > th {
+      background-color: #fafafa;
+      font-weight: 600;
+      padding: 16px 12px;
+      font-size: 14px;
+      border-bottom: 2px solid #f0f0f0;
+
+      &::before {
+        display: none;
+      }
+    }
+
+    .ant-table-tbody > tr {
+      td {
+        padding: 16px 12px;
+        transition: all 0.3s ease;
+      }
+
+      &:last-child td {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+.routeContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 4px;
+
+  .portName {
+    background: #e6f7ff;
+    color: #1890ff;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 13px;
+    border: 1px solid #91d5ff;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: #1890ff;
+      color: white;
+    }
+  }
+
+  .arrow {
+    color: #1890ff;
+  }
+}
+
+.dateTime {
+  display: inline-block;
+  background: #f5f5f5;
+  padding: 6px 12px;
+  border-radius: 8px;
+  text-align: center;
+  
+  small {
+    color: #666;
+    display: block;
+    margin-top: 2px;
+  }
+}
+
+.actionButtons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  button {
+    min-width: 140px;
+    border-radius: 6px;
+    
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.mobileDetails {
+  padding: 12px;
+  background: #fafafa;
+  border-radius: 8px;
+  margin: 8px 0;
+
+  .mobileLabel {
+    color: #666;
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+
+  .mobileRoute,
+  .mobileDeparture {
+    margin-bottom: 12px;
+  }
+
+  .mobileActions {
+    display: grid;
+    gap: 8px;
+    margin-top: 16px;
+
+    button {
+      height: 36px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .dashboardTable {
+    :global {
+      .ant-table {
+        font-size: 13px;
+      }
+    }
+  }
+}

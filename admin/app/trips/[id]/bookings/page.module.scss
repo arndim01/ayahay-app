@@ -1,0 +1,22 @@
+.main-container {
+  padding: 16px 5vw;
+
+  @media (max-width: 1023px) {
+    padding: 24px 5vw;
+  }
+
+  .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .error-text {
+    text-align: center;
+  }
+
+  .no-padding {
+    padding: 0;
+  }
+}

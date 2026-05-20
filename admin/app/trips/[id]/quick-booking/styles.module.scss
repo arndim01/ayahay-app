@@ -1,0 +1,144 @@
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.bookingCard {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+}
+
+.tripInfo {
+  margin: 20px 0;
+  background: #fafafa;
+  padding: 16px;
+  border-radius: 8px;
+
+  span {
+    font-size: 16px;
+  }
+}
+
+.bookingForm {
+  margin-top: 24px;
+}
+
+.passengerRow {
+  padding: 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #fafafa;
+  }
+}
+
+.denominationButtons {
+  display: flex;
+  gap: 8px;
+
+  button {
+    min-width: 45px;
+    height: 32px;
+
+    &.selectedButton {
+      background-color: #1890ff;
+      color: white;
+      border-color: #1890ff;
+    }
+  }
+}
+
+.rateDisplay {
+  text-align: right;
+  color: #666;
+}
+
+.totalSection {
+  margin: 24px 0;
+  padding: 16px;
+  background: #f5f5f5;
+  border-radius: 8px;
+}
+
+.totalValue {
+  text-align: right;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.bookButton {
+  margin-top: 16px;
+  height: 48px;
+  font-size: 16px;
+
+  &:disabled {
+    opacity: 0.6;
+  }
+}
+
+// New styles for trip search
+.tripSelector {
+  margin: 20px 0;
+
+  :global {
+    .ant-select {
+      margin-top: 8px;
+    }
+  }
+}
+
+.port-input {
+  margin: 16px 0;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  :global {
+    .ant-form-item {
+      flex: 1;
+      min-width: 200px;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.date-picker {
+  width: 100%;
+  max-width: 200px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 12px;
+  }
+
+  .bookingCard {
+    padding: 16px;
+  }
+
+  .port-input {
+    flex-direction: column;
+    gap: 12px;
+
+    :global {
+      .ant-form-item {
+        width: 100%;
+      }
+    }
+  }
+
+  .denominationButtons {
+    flex-wrap: wrap;
+  }
+}
